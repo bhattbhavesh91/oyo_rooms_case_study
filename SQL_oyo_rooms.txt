@@ -1,0 +1,154 @@
+CREATE TABLE tabled(hotel_id INT(11) NOT NULL,city VARCHAR(45) NULL);
+
+LOAD DATA LOCAL INFILE "/home/bhavesh/Desktop/oyo/TableD.csv" INTO TABLE tabled
+          FIELDS TERMINATED BY ','  
+          OPTIONALLY ENCLOSED BY '"' 
+          LINES TERMINATED BY '\n' 
+          IGNORE 1 ROWS 
+       (@hotel_id, @city) 
+       SET hotel_id = IF(@hotel_id = '', NULL, @hotel_id), city = IF(@city = '', NULL, @city); 
+         
+		 
+CREATE TABLE table_a(
+	booking_id	INT(20) NOT NULL,
+	customer_id	INT(20),
+	source	INT(20),
+	status	INT(20),
+	checkin	date,
+	checkout date,
+	oyo_rooms INT(20),
+	hotel_id INT(20),
+	amount INT(20),
+	discount INT(20),
+	date date,
+	PRIMARY KEY (booking_id));
+	
+LOAD DATA LOCAL INFILE "/home/bhavesh/Desktop/oyo/TableA.csv" INTO TABLE table_a
+          FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS 
+        (@booking_id, @customer_id,@source,@status,@var1,@var2,@oyo_rooms,@hotel_id,@amount,@discount,@var3) 
+       SET booking_id = IF(@booking_id = '', NULL, @booking_id),
+	   customer_id = IF(@customer_id = '', NULL, @customer_id),
+	   source = IF(@source = '', NULL, @source),
+	   status = IF(@status = '', NULL, @status),
+	   checkin = IF(@checkin = '', NULL, STR_TO_DATE(@var1, '%m/%d/%Y')),
+	   checkout = IF(@checkout = '',NULL, STR_TO_DATE(@var2, '%m/%d/%Y')),
+	   oyo_rooms = IF(@oyo_rooms = '', NULL, @oyo_rooms),
+	   hotel_id = IF(@hotel_id = '', NULL, @hotel_id),
+	   amount = IF(@amount = '', NULL, @amount),
+	   discount = IF(@discount = '', NULL, @discount),
+	   date = IF(@date = '',NULL, STR_TO_DATE(@var3, '%m/%d/%Y'));
+	
+CREATE TABLE table_b(
+	booking_id	INT(20) NOT NULL,
+	customer_id	INT(20),
+	source	INT(20),
+	status	INT(20),
+	checkin	date,
+	checkout date,
+	oyo_rooms INT(20),
+	hotel_id INT(20),
+	amount INT(20),
+	discount INT(20),
+	date date,
+	PRIMARY KEY (booking_id));
+	
+LOAD DATA LOCAL INFILE "/home/bhavesh/Desktop/oyo/TableB.csv" INTO TABLE table_b
+          FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS 
+        (@booking_id, @customer_id,@source,@status,@var1,@var2,@oyo_rooms,@hotel_id,@amount,@discount,@var3) 
+       SET booking_id = IF(@booking_id = '', NULL, @booking_id),
+	   customer_id = IF(@customer_id = '', NULL, @customer_id),
+	   source = IF(@source = '', NULL, @source),
+	   status = IF(@status = '', NULL, @status),
+	   checkin = IF(@checkin = '', NULL, STR_TO_DATE(@var1, '%m/%d/%Y')),
+	   checkout = IF(@checkout = '',NULL, STR_TO_DATE(@var2, '%m/%d/%Y')),
+	   oyo_rooms = IF(@oyo_rooms = '', NULL, @oyo_rooms),
+	   hotel_id = IF(@hotel_id = '', NULL, @hotel_id),
+	   amount = IF(@amount = '', NULL, @amount),
+	   discount = IF(@discount = '', NULL, @discount),
+	   date = IF(@date = '',NULL, STR_TO_DATE(@var3, '%m/%d/%Y'));
+	
+
+	   
+	   
+CREATE TABLE table_c(
+	booking_id	INT(20) NOT NULL,
+	customer_id	INT(20),
+	source	INT(20),
+	status	INT(20),
+	checkin	date,
+	checkout date,
+	oyo_rooms INT(20),
+	hotel_id INT(20),
+	amount INT(20),
+	discount INT(20),
+	date date,
+	PRIMARY KEY (booking_id));
+	
+LOAD DATA LOCAL INFILE "/home/bhavesh/Desktop/oyo/TableC.csv" INTO TABLE table_c
+          FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS 
+        (@booking_id, @customer_id,@source,@status,@var1,@var2,@oyo_rooms,@hotel_id,@amount,@discount,@var3) 
+       SET booking_id = IF(@booking_id = '', NULL, @booking_id),
+	   customer_id = IF(@customer_id = '', NULL, @customer_id),
+	   source = IF(@source = '', NULL, @source),
+	   status = IF(@status = '', NULL, @status),
+	   checkin = IF(@checkin = '', NULL, STR_TO_DATE(@var1, '%m/%d/%Y')),
+	   checkout = IF(@checkout = '',NULL, STR_TO_DATE(@var2, '%m/%d/%Y')),
+	   oyo_rooms = IF(@oyo_rooms = '', NULL, @oyo_rooms),
+	   hotel_id = IF(@hotel_id = '', NULL, @hotel_id),
+	   amount = IF(@amount = '', NULL, @amount),
+	   discount = IF(@discount = '', NULL, @discount),
+	   date = IF(@date = '',NULL, STR_TO_DATE(@var3, '%m/%d/%Y'));
+	   
+
+Q1) Write the query to count # of unique guests who have made a booking, total # of bookings for each month i.e Jan, Feb and Mar 2017?
+   
+mysql> SELECT COUNT(DISTINCT customer_id) from table_a;
++-----------------------------+
+| COUNT(DISTINCT customer_id) |
++-----------------------------+
+|                         719 |
++-----------------------------+
+
+mysql> SELECT COUNT(DISTINCT customer_id) from table_b;
++-----------------------------+
+| COUNT(DISTINCT customer_id) |
++-----------------------------+
+|                         699 |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(DISTINCT customer_id) from table_c;
++-----------------------------+
+| COUNT(DISTINCT customer_id) |
++-----------------------------+
+|                         656 |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) from table_a;
++----------+
+| COUNT(*) |
++----------+
+|     1000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) from table_b;
++----------+
+| COUNT(*) |
++----------+
+|      928 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) from table_c;
++----------+
+| COUNT(*) |
++----------+
+|      961 |
++----------+
+1 row in set (0.00 sec)
+
+
+ALTER TABLE table_a ADD COLUMN Room_Night INT(15);
+UPDATE table_a SET Room_Night=oyo_rooms *(checkout - checkin );
